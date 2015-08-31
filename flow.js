@@ -102,6 +102,7 @@ function data_wrangle(dataset, fy){
         return v.budget_year == fy
     })
     
+    // Original Oakland array
     // ::: THESE ARE REVENUE ITEMS IN account_category column and Revenues nodes on left side of diagram
     // keep variations of the same label on a single line 
 //    rev_order = [
@@ -199,6 +200,7 @@ function data_wrangle(dataset, fy){
         return v.account_type == "Expense";
     });
     
+    // Original Oakland array
     // ::: THESE ARE EXPENSE ITEMS IN department column and Expense nodes on right of sankey diagram
     // keep variations of the same label on a single line    
 //    exp_order = [

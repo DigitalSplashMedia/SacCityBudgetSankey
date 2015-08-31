@@ -161,7 +161,7 @@ d3.sankey = function() {
 
     initializeNodeDepth();
     resolveCollisions();
-    //centerFunds();
+    centerFunds();
     for (var alpha = 1; iterations > 0; --iterations) {
       relaxRightToLeft(alpha *= .99);
       resolveCollisions();
@@ -253,19 +253,19 @@ d3.sankey = function() {
       return a.y - b.y;
     }
 
-    // custom vertical placement of Funds - * Commented out call of on line 164
-//    function centerFunds(){
-//      // figure out leftover vertical space
-//      var funds = nodesByBreadth[2];
-//      var vpad = sankey.size()[1] - sankey.nodePadding();
-//      funds.forEach(function(node, i) {
-//          vpad -= node.dy;
-//      });
-//
-//      // space funds out more
-//      funds[0].y += vpad / 3;
-//      funds[1].y += (vpad / 3) * 2
-//    }
+    // custom vertical placement of Funds 
+    function centerFunds(){
+      // figure out leftover vertical space
+      var funds = nodesByBreadth[2];
+      var vpad = sankey.size()[1] - sankey.nodePadding();
+      funds.forEach(function(node, i) {
+          vpad -= node.dy;
+      });
+
+      // space funds out more
+      funds[0].y += vpad / 3;
+      funds[1].y += (vpad / 3) * 2
+    }
   } // end of function computeNodeDepths
 
   function computeLinkDepths() {
