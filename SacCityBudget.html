@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="custom.css">
+		<title>Sacramento City Budget</title>
+        
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>            <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.5/d3.min.js"></script>
+        
+		<script type="text/javascript" src="http://d3js.org/d3.v3.js"></script>
+        <script src="sankey.js" charset="utf-8"></script>
+
+            <style>
+              #chart {
+                height: 600px;
+              }
+              #hover_description{
+                height: 26px;
+              }
+              .node rect {
+                fill-opacity: .9;
+                shape-rendering: crispEdges;
+              }
+              .node text {
+                pointer-events: none;
+                text-shadow: 0 1px 0 #fff;
+                font-size: 12px;
+              }
+              .link {
+                fill: none;
+                stroke: #000;
+                stroke-opacity: .2;
+              }
+              .link:hover {
+                stroke-opacity: .5;
+              }
+              #warning{
+                color: red;
+              }
+            </style>
+    </head>
+    <body>
+<div class="container"> 
+  <div class="row">
+    <div class="intro">
+      <h2>Sacramento City Budget </h2>
+      <p>Prototype flow diagram of the City of Sacramento budget from Revenue source through Fund to Expense.</p>
+      <p> <em>Mouse over a flow line to highlight it; click on a bar to highlight all its flows.</em></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <h4>Fiscal Year</h4>
+      <select id="fy" class="form-control"></select>
+    </div>
+  </div>
+  <div id="sankey">
+    <div id="chart"></div>
+  </div>
+
+  <div id="hover_description"></div>
+
+</div> 
+        
+      
+<script src="flow.js" charset="utf-8"></script>
+        
+<script type='text/javascript'>
+  var datafiles = [];
+    //datafiles.push("FY15-16__FY16-17.csv");  
+    datafiles.push("FY14-15__FY15-16.csv"); 
+</script>       
+        
+<script>
+  var years = []
+  datafiles.forEach(function(datafile){
+      years = years.concat(datafile.slice(0,-4).split("__"));
+  })
+  console.log(years);
+  years.reverse();
+    
+  d3.select("#fy.form-control").selectAll('option')
+      .data(years)
+      .enter()
+      .append('option')
+          .attr('value', function(d){ return d; })
+          .property('selected', function(d,i){ return i == 0;})
+          .text(function(d){return d;})
+          ;
+  d3.select("#fy.form-control")
+      .on('change', drawFlow);
+    
+  // run once to initially populate the chart
+  drawFlow();
+    
+  function drawFlow(){
+      years.reverse();
+      var fy = d3.select("#fy.form-control").node().value,//FY16-17 or FY15-16
+          fy_i = years.indexOf(fy),//index of fy
+          file_i = Math.floor(fy_i / 2),// index of fy div 2.... why??? returns 0 
+          //file_i = Math.floor(fy_i / 3),
+          filename = datafiles[file_i];
+      console.log(filename);
+      years.reverse();
+      
+      d3.csv("data/" + filename, function(error, data){
+          if (error) {
+              console.log('error', error);
+              return false;
+          }
+          var final_data = data_wrangle(data, fy);
+          do_with_budget(final_data);
+      });
+  }// function drawFlow
+</script>
+    </body>
+</html>
