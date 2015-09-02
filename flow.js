@@ -102,49 +102,16 @@ function data_wrangle(dataset, fy){
         return v.budget_year == fy
     })
     
-    // Original Oakland array
-    // ::: THESE ARE REVENUE ITEMS IN account_category column and Revenues nodes on left side of diagram
-    // keep variations of the same label on a single line 
-//    rev_order = [
-//      "Property Tax", 
-//      "Business License Tax", 
-//      "Sales Tax",
-//      "Utility Consumption Tax", 
-//      "Real Estate Transfer Tax",
-//      "Fines & Penalties", 
-//      "Parking Tax", 
-//      "Transient Occupancy Tax",
-//      "Service Charges", 
-//      "Transfers from Fund Balance", 
-//      "Miscellaneous Revenue", 
-//      "Interest Income", 
-//      "Licenses & Permits",
-//      "Interfund Transfers", 
-//      "Grants & Subsidies", 
-//      "Local (Parcel) Taxes", "Local Tax", 
-//      "Internal Service Funds",
-//      "Gas Tax",
-//    ];
-    
-    
     //Sac revenue items - account group column
     rev_order = [
-    "Charges, Fees, and Services",
-    "City Debt Service",
-    "City Property",
-    "Contingency",
-    "Contributions from Other Funds",
-    "Employee Services",
-    "Fines, Forfeitures, and Penalties",
-    "Interest, Rents, and Concessions",
-    "Intergovernmental",
-    "Labor and Supply Offset",
-    "Licenses and Permits",
-    "Miscellaneous Revenue",
-    "Operating Transfers",
-    "Other Services and Supplies",
-    "Taxes",
-    "Transfers"
+    "Charges, Fees, and Services",//
+    "Contributions from Other Funds",//
+    "Fines, Forfeitures, and Penalties",//
+    "Interest, Rents, and Concessions",//
+    "Intergovernmental",//
+    "Licenses and Permits",//
+    "Miscellaneous Revenue",//
+    "Taxes"//
     ];
     
     rev = newdata.filter(function(v,i,a){
@@ -198,36 +165,7 @@ function data_wrangle(dataset, fy){
     }
     exp = newdata.filter(function(v,i,a){
         return v.account_type == "Expense";
-    });
-    
-    // Original Oakland array
-    // ::: THESE ARE EXPENSE ITEMS IN department column and Expense nodes on right of sankey diagram
-    // keep variations of the same label on a single line    
-//    exp_order = [
-//        "Police Department", "Police",
-//        "Fire Department", "Fire",
-//        "City Council",
-//        "Administrative Services",
-//        "Oakland Parks & Recreation",
-//        "Human Services",
-//        "City Auditor",
-//        "Community Services",
-//        "Information Technology",
-//        "Finance",
-//        "City Clerk",
-//        "Capital Improvement Projects",
-//        "Mayor",
-//        "Economic & Workforce Development",
-//        "City Administrator",
-//        "Human Resources Management",
-//        "Planning & Building",
-//        "City Attorney",
-//        "Housing & Community Development",
-//        "Library", "Oakland Public Library",
-//        "Public Works", "Oakland Public Works",
-//        "Debt Service & Misc."
-//    ];
-    
+    });    
     
     //    Sac expense items - department column
     exp_order = [
@@ -242,7 +180,6 @@ function data_wrangle(dataset, fy){
         "Economic Development",
         "Finance",
         "Fire",
-        "Fund Reserves",
         "General Services",
         "Human Resources",
         "Information Technology",
@@ -256,9 +193,6 @@ function data_wrangle(dataset, fy){
     
     expdivs = d3.nest()
         .key(function(d){
-            if (d.department == "Non-Departmental") {
-                return "Debt Service & Misc."
-            }
             return d.department;
         })
         .sortKeys(function(a,b){
