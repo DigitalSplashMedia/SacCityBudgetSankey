@@ -104,14 +104,14 @@ function data_wrangle(dataset, fy){
     
     //Sac revenue items - account group column
     rev_order = [
-    "Charges, Fees, and Services",//
-    "Contributions from Other Funds",//
-    "Fines, Forfeitures, and Penalties",//
-    "Interest, Rents, and Concessions",//
-    "Intergovernmental",//
-    "Licenses and Permits",//
-    "Miscellaneous Revenue",//
-    "Taxes"//
+    "Taxes",
+    "Charges, Fees, and Services",
+    "Miscellaneous Revenue", 
+    "Intergovernmental",    
+    "Contributions from Other Funds",
+    "Licenses and Permits",
+    "Fines, Forfeitures, and  Penalties",
+    "Interest, Rents, and Concessions"
     ];
     
     rev = newdata.filter(function(v,i,a){
@@ -169,26 +169,26 @@ function data_wrangle(dataset, fy){
     
     //    Sac expense items - department column
     exp_order = [
-        "City Attorney",
-        "City Clerk",
-        "City Manager",
-        "City Treasurer",
+        "Police",
+        "Utilities",
         "Citywide and Community Support",
+        "General Services",
+        "Fire",
+        "Debt Service",
+        "Public Works",
+        "Human Resources",
+        "Parks and Recreation",
         "Community Development",
         "Convention and Cultural Services",
-        "Debt Service",
-        "Economic Development",
         "Finance",
-        "Fire",
-        "General Services",
-        "Human Resources",
         "Information Technology",
+        "City Attorney",
         "Mayor/Council",
-        "Non-Appropriated",
-        "Parks and Recreation",
-        "Police",
-        "Public Works",
-        "Utilities"
+        "City Manager",
+        "City Treasurer",
+        "Economic Development",
+        "City Clerk",
+        "Non-Appropriated"
     ];
     
     expdivs = d3.nest()
